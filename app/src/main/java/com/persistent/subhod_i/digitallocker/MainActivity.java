@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.notification_icon);
         mBuilder.setContentTitle("New transaction sent");
-        mBuilder.setContentText("Tx hash"+transactionHash);
+        mBuilder.setContentText("Tx hash: "+transactionHash);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(101, mBuilder.build());
     }
