@@ -57,6 +57,6 @@ public class Wallet {
                 "0x19e03255f667bdfd50a32722df860b1eeaf4d635",  // you can put any address here
                 BigDecimal.ONE, Convert.Unit.WEI)  // 1 wei = 10^-18 Ether
                 .send();
-        return "https://rinkeby.etherscan.io/tx/"+ transferReceipt.getTransactionHash();
+        return transferReceipt.getTransactionHash();
     }
 }
