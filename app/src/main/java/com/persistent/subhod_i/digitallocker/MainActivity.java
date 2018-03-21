@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mBuilder.setContentTitle("New transaction sent");
         mBuilder.setContentText("Tx hash: "+transactionHash);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(101, mBuilder.build());
+        mNotificationManager.notify(102, mBuilder.build());
     }
     private void checkPermissions() {
         String TAG = "Permisiion";
@@ -73,8 +73,13 @@ public class MainActivity extends AppCompatActivity {
 //                    String transactionHash = wallet.sendTransaction(web3j, credentials);
 //                    addNotification(transactionHash);
 //                    wallet.bip();
-//                    wallet.deployContract(web3j, credentials);
-                    wallet.contractTransaction(web3j, credentials);
+//                    String contractAddress = wallet.deployContract(web3j, credentials);
+//                    Log.e("Contract deployment", contractAddress);
+//                    addNotification(contractAddress);
+//                    String transactionHash = wallet.contractTransaction(web3j, credentials);
+//                    Log.e("Contract deployment", transactionHash);
+                        wallet.queryContract(web3j);
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

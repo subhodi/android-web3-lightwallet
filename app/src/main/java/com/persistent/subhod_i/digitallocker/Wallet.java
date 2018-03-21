@@ -4,10 +4,12 @@ import android.os.Environment;
 import android.util.Log;
 
 import org.web3j.abi.FunctionEncoder;
+import org.web3j.abi.FunctionReturnDecoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.Uint;
+import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.crypto.Bip39Wallet;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.RawTransaction;
@@ -16,7 +18,10 @@ import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.Web3jFactory;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthGetTransactionReceipt;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
@@ -29,7 +34,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
@@ -74,10 +81,13 @@ public class Wallet {
         return transferReceipt.getTransactionHash();
     }
 
-    public void deployContract(Web3j web3j, Credentials credentials) throws Exception {
+    public String deployContract(Web3j web3j, Credentials credentials) throws Exception {
         // using a raw transaction
+        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
+                "0x833e56c5df2a654372a252658006af4d3158e9f3", DefaultBlockParameterName.LATEST).sendAsync().get();
+        BigInteger nonce = ethGetTransactionCount.getTransactionCount();
         RawTransaction rawTransaction = RawTransaction.createContractTransaction(
-                BigInteger.valueOf(1),
+                nonce,
                 BigInteger.valueOf(0),
                 BigInteger.valueOf(0xE0000),
                 BigInteger.valueOf(0),
@@ -85,23 +95,34 @@ public class Wallet {
 
         byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
         String hexValue = Numeric.toHexString(signedMessage);
+//        String transactionHash = web3j.ethSendRawTransaction(hexValue).send().getTransactionHash();
 
-        String hash = web3j.ethSendRawTransaction(hexValue).send().getTransactionHash();
+        EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+//        get contract address
+//        EthGetTransactionReceipt transactionReceipt = web3j.ethGetTransactionReceipt(ethSendTransaction.getTransactionHash()).send();
+//        String contractAddress = "";
+//
+//        if (transactionReceipt.getTransactionReceipt() != null) {
+//            contractAddress = transactionReceipt.getTransactionReceipt().getContractAddress();
+//        } else {
+//            if (transactionReceipt.getTransactionReceipt() != null) {
+//                contractAddress = transactionReceipt.getTransactionReceipt().getContractAddress();
+//            } else {
+//
+//            }
+//        }
+        return "ContractAddress";
     }
 
     public String contractTransaction(Web3j web3j, Credentials credentials) throws Exception {
         ArrayList<Type> dataParams = new ArrayList<>();
-        dataParams.add(new Uint(BigInteger.valueOf(20)));
-
-        //This will be used for creating "RawTransaction" object
+        dataParams.add(new Uint(BigInteger.valueOf(35)));
         Function function = new Function("set", dataParams, Collections.<TypeReference<?>>emptyList());
 
         String encodedFunction = FunctionEncoder.encode(function);
         EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
                 "0x833e56c5df2a654372a252658006af4d3158e9f3", DefaultBlockParameterName.LATEST).sendAsync().get();
-
         BigInteger nonce = ethGetTransactionCount.getTransactionCount();
-
 
         RawTransaction rawTransaction = RawTransaction.createTransaction(
                 nonce,
@@ -112,8 +133,34 @@ public class Wallet {
         byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
         String hexValue = Numeric.toHexString(signedMessage);
 
-        String hash = web3j.ethSendRawTransaction(hexValue).send().getTransactionHash();
-        return "success";
+        EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+        String transactionHash = ethSendTransaction.getTransactionHash();
+        return transactionHash;
+    }
+
+    public String queryContract(Web3j web3j) throws Exception {
+        ArrayList<Type> dataParams = new ArrayList<>();
+        List<Type> inputParameters = new ArrayList<>();
+        List<TypeReference<?>> outputParameters = new ArrayList<>();
+        outputParameters.add( new TypeReference< Uint>(){});
+        Function function = new Function("get",
+                inputParameters,
+               outputParameters);
+
+        String encodedFunction = FunctionEncoder.encode(function);
+
+        org.web3j.protocol.core.methods.response.EthCall response = web3j.ethCall(
+                Transaction.createEthCallTransaction("0x833e56c5df2a654372a252658006af4d3158e9f3", "0x57f6e9596693364d33fd7c35ae525568a350cbae", encodedFunction),
+                DefaultBlockParameterName.LATEST)
+                .sendAsync().get();
+
+        List<Type> someTypes = FunctionReturnDecoder.decode(
+                response.getValue(), function.getOutputParameters());
+
+        for (Type element : someTypes) {
+            Log.e("elemnt",element.getValue().toString());
+        }
+        return "sdsd";
     }
 
     public String bip() throws Exception {
