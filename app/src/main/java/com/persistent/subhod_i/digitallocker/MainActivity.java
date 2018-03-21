@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toast.makeText(MainActivity.this, "Welcome to Eth-wallet", Toast.LENGTH_LONG).show();
         checkPermissions();
-//        wallet.createWallet();
+ //      wallet.createWallet();
         makeTransaction();
     }
 
@@ -68,13 +68,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Web3j web3 = wallet.constructWeb3();
+                    Web3j web3j = wallet.constructWeb3();
                     Credentials credentials = wallet.loadCredentials();
-                    String transactionHash = wallet.sendTransaction(web3, credentials);
-                    addNotification(transactionHash);
+//                    String transactionHash = wallet.sendTransaction(web3j, credentials);
+//                    addNotification(transactionHash);
+//                    wallet.bip();
+//                    wallet.deployContract(web3j, credentials);
+                    wallet.contractTransaction(web3j, credentials);
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("error ", "Web3 connection error " + e.toString());
+                    Log.e("Web3 Error ",  e.toString());
                 }
             }
         });
