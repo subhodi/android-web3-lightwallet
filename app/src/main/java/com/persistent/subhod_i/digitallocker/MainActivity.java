@@ -19,6 +19,7 @@ import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.utils.Numeric;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 import static java.lang.String.join;
@@ -86,12 +87,17 @@ public class MainActivity extends AppCompatActivity {
 //                    String transactionHash = wallet.contractTransaction(web3j, credentials);
 //                    Log.e("Contract deployment", transactionHash);
 //                        wallet.queryContract(web3j);
+
                     Contract contract = new Contract(web3j,credentials);
-//                    String contractAddress = contract.deploy();
-//                    Log.e("Contract" , contractAddress);
+                    String contractAddress = contract.deploy();
+                    Log.e("Contract" , contractAddress);
 
                     String transactionHash= contract.open("alice", Numeric.hexStringToByteArray(asciiToHex("myString")));
                     Log.e("Contract", transactionHash);
+
+                    byte[] result = contract.query("alice");
+                    Log.e("Contract",  new String(result, StandardCharsets.UTF_8));
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

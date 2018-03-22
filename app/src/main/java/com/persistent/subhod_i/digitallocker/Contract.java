@@ -25,14 +25,20 @@ public class Contract {
         Simple_sol_simple contract = Simple_sol_simple.deploy(
                 web3j, credentials,
                 BigInteger.valueOf(0),
-                BigInteger.valueOf(10000000)).send();
+                BigInteger.valueOf(4700000)).send();
         return contract.getContractAddress();
     }
 
     public String open(String key, byte[] value) throws Exception {
         Simple_sol_simple contract = Simple_sol_simple.load(
-                "0x9ac8a5efc282afab3b2a7286704f232767645733", web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
+                "0x2f7b3ff7f918d68d172cc2ae2baa2f10aa79ea9d", web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
         TransactionReceipt transactionReceipt = contract.open(key,value).send();
         return transactionReceipt.getTransactionHash();
+    }
+
+    public byte[] query(String key) throws Exception {
+        Simple_sol_simple contract = Simple_sol_simple.load(
+                "0x2f7b3ff7f918d68d172cc2ae2baa2f10aa79ea9d", web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
+        return contract.query(key).send();
     }
 }
