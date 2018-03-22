@@ -48,19 +48,16 @@ import static org.web3j.tx.ManagedTransaction.GAS_PRICE;
 
 public class Wallet {
 
-    public void createWallet() {
+    public String createWallet() throws Exception {
         String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).getPath();
         Log.e("Create-wallet", path);
-        try {
-            String fileName = WalletUtils.generateLightNewWalletFile("password", new File(path));
-        } catch (Exception e) {
-            Log.e("Create-wallet", e.toString());
-        }
+        String fileName = WalletUtils.generateLightNewWalletFile("password", new File(path));
+        return path+fileName;
     }
 
-    public Credentials loadCredentials() throws Exception {
+    public Credentials loadCredentials(String password) throws Exception {
         Credentials credentials = WalletUtils.loadCredentials(
-                "password",
+                password,
                 "/storage/emulated/0/Download/UTC--2018-03-16T19-05-15.125--833e56c5df2a654372a252658006af4d3158e9f3.json");
         Log.i("Loading credentials", "Credentials loaded");
         return credentials;
@@ -145,10 +142,11 @@ public class Wallet {
         ArrayList<Type> dataParams = new ArrayList<>();
         List<Type> inputParameters = new ArrayList<>();
         List<TypeReference<?>> outputParameters = new ArrayList<>();
-        outputParameters.add( new TypeReference< Uint>(){});
+        outputParameters.add(new TypeReference<Uint>() {
+        });
         Function function = new Function("get",
                 inputParameters,
-               outputParameters);
+                outputParameters);
 
         String encodedFunction = FunctionEncoder.encode(function);
 
@@ -161,7 +159,7 @@ public class Wallet {
                 response.getValue(), function.getOutputParameters());
 
         for (Type element : someTypes) {
-            Log.e("elemnt",element.getValue().toString());
+            Log.e("elemnt", element.getValue().toString());
         }
         return "sdsd";
     }
@@ -171,9 +169,10 @@ public class Wallet {
         Bip39Wallet bip39Wallet = WalletUtils.generateBip39Wallet("ghhgvhh", new File(path));
         String filename = bip39Wallet.getFilename();
         String mnemonic = bip39Wallet.getMnemonic();
-
         return "Success";
     }
 
+    public void checkWalletExist() {
 
+    }
 }
