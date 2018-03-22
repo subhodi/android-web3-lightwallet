@@ -39,6 +39,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
+import static org.web3j.tx.ManagedTransaction.GAS_PRICE;
+
 
 /**
  * Created by subhod_i on 16-03-2018.
@@ -115,6 +117,7 @@ public class Wallet {
     }
 
     public String contractTransaction(Web3j web3j, Credentials credentials) throws Exception {
+
         ArrayList<Type> dataParams = new ArrayList<>();
         dataParams.add(new Uint(BigInteger.valueOf(35)));
         Function function = new Function("set", dataParams, Collections.<TypeReference<?>>emptyList());
@@ -171,4 +174,6 @@ public class Wallet {
 
         return "Success";
     }
+
+
 }

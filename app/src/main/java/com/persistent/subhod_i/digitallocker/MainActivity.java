@@ -1,6 +1,7 @@
 package com.persistent.subhod_i.digitallocker;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +17,12 @@ import android.content.Context;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.utils.Numeric;
+
+import java.util.Collections;
+
+import static java.lang.String.join;
+import static org.web3j.utils.Numeric.hexStringToByteArray;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -78,8 +85,13 @@ public class MainActivity extends AppCompatActivity {
 //                    addNotification(contractAddress);
 //                    String transactionHash = wallet.contractTransaction(web3j, credentials);
 //                    Log.e("Contract deployment", transactionHash);
-                        wallet.queryContract(web3j);
+//                        wallet.queryContract(web3j);
+                    Contract contract = new Contract(web3j,credentials);
+//                    String contractAddress = contract.deploy();
+//                    Log.e("Contract" , contractAddress);
 
+                    String transactionHash= contract.open("alice", Numeric.hexStringToByteArray(asciiToHex("myString")));
+                    Log.e("Contract", transactionHash);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -90,4 +102,18 @@ public class MainActivity extends AppCompatActivity {
 
         thread.start();
     }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public  String asciiToHex(String asciiValue)
+    {
+        char[] chars = asciiValue.toCharArray();
+        StringBuffer hex = new StringBuffer();
+        for (int i = 0; i < chars.length; i++)
+        {
+            hex.append(Integer.toHexString((int) chars[i]));
+        }
+
+        return hex.toString() + "".join("", Collections.nCopies(32 - (hex.length()/2), "00"));
+    }
+
 }
