@@ -105,12 +105,12 @@
             fab:fab_label="Ropsten"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/live"
+            android:id="@+id/mainnet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
             fab:fab_size="mini"
-            fab:fab_label="Live"/>
+            fab:fab_label="Mainnet"/>
 
     </com.github.clans.fab.FloatingActionMenu>
 

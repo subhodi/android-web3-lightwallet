@@ -28,7 +28,7 @@ public class HomeActivity extends Activity {
     Credentials credentials;
     TextView ethereumId;
     TextView accountBalance;
-    FloatingActionButton quorum, ropsten;
+    FloatingActionButton quorum, ropsten, mainnet;
     BigInteger balance;
 
     @Override
@@ -40,6 +40,8 @@ public class HomeActivity extends Activity {
         accountBalance = (TextView) findViewById(R.id.accountBalance);
         quorum = (FloatingActionButton) findViewById(R.id.quorum);
         ropsten = (FloatingActionButton) findViewById(R.id.ropsten);
+        mainnet = (FloatingActionButton) findViewById(R.id.mainnet);
+
         try {
             addEventListeners();
             loadData();
@@ -71,6 +73,17 @@ public class HomeActivity extends Activity {
                 }
             }
         });
+
+        mainnet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    new LongOperation().execute("mainnetTransaction");
+                } catch (Exception e) {
+
+                }
+            }
+        });
     }
 
     private void loadData() throws Exception {
@@ -93,6 +106,12 @@ public class HomeActivity extends Activity {
             Wallet wallet = new Wallet();
             try {
                 switch (params[0]) {
+                    case "mainnetTransaction":
+                        web3j = wallet.constructWeb3("https://mainnet.infura.io/esnqTlDOSuuLXjjlsT1M");
+                        credentials = wallet.loadCredentials(password);
+                        wallet.sendTransaction(web3j, credentials);
+                        loadBalance();
+                        return "mainnetTransaction";
                     case "ropstenTransaction":
                         web3j = wallet.constructWeb3("https://ropsten.infura.io/esnqTlDOSuuLXjjlsT1M");
                         credentials = wallet.loadCredentials(password);
@@ -114,7 +133,11 @@ public class HomeActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            accountBalance.setText(balance.toString());
+            try {
+                accountBalance.setText(balance.toString());
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
