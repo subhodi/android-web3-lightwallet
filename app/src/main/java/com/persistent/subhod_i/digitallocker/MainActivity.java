@@ -2,6 +2,7 @@ package com.persistent.subhod_i.digitallocker;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toast.makeText(MainActivity.this, "Welcome to Eth-wallet", Toast.LENGTH_LONG).show();
         RegisterView();
-        wallet.checkWalletExist();
+        loadDefaultWallet();
         checkPermissions();
         addEventListners();
         makeTransaction();
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         create = (Button) findViewById(R.id.create);
         result = (TextView) findViewById(R.id.result);
-        password   = (EditText)findViewById(R.id.password);
-        ethereumId   = (EditText)findViewById(R.id.ethereumId);
+        password = (EditText) findViewById(R.id.password);
+        ethereumId = (EditText) findViewById(R.id.ethereumId);
     }
 
     private void addEventListners() {
@@ -59,9 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String passwordText = password.getText().toString();
                     Credentials credentials = wallet.loadCredentials(passwordText);
-                    result.setText(credentials.getAddress()+" Loaded successfully");
+                    result.setText(credentials.getAddress() + " Loaded successfully");
                     ethereumId.setText(credentials.getAddress());
-                }catch (Exception e){
+                    Intent homeIntent = new Intent(MainActivity.this,
+                            HomeActivity.class);
+                    homeIntent.putExtra("ethereumId",credentials.getAddress());
+                    homeIntent.putExtra("password",passwordText);
+                    startActivity(homeIntent);
+                } catch (Exception e) {
                     result.setText(e.toString());
                 }
             }
@@ -73,12 +79,17 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String fileName = wallet.createWallet();
                     result.setText(fileName);
-                } catch(Exception e) {
+                } catch (Exception e) {
                     result.setText(e.toString());
                 }
             }
         });
     }
+
+    private void loadDefaultWallet() {
+        ethereumId.setText("0x833e56c5df2a654372a252658006af4d3158e9f3");
+    }
+
     private void addNotification(String transactionHash) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.notification_icon);

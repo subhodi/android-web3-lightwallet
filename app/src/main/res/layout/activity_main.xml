@@ -58,7 +58,8 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="password" />
 
     <Button
         android:id="@+id/create"
