@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/balance"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto" >
 
     <TextView
         android:id="@+id/ethereumId"
@@ -13,7 +14,9 @@
         android:layout_marginStart="69dp"
         android:layout_marginTop="75dp"
         android:layout_toEndOf="@+id/textView5"
-        android:text="Id" />
+        android:text="Id"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/accountBalance"
@@ -22,7 +25,9 @@
         android:layout_alignStart="@+id/ethereumId"
         android:layout_below="@+id/ethereumId"
         android:layout_marginTop="71dp"
-        android:text="Balance" />
+        android:text="Loading..."
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -32,7 +37,9 @@
         android:layout_alignBottom="@+id/ethereumId"
         android:layout_alignParentStart="true"
         android:layout_marginStart="22dp"
-        android:text="Ethereum Id" />
+        android:text="Ethereum Id"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -40,19 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/accountBalance"
         android:layout_alignStart="@+id/textView3"
-        android:text="Ether Balance" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="56dp"
-        android:layout_marginEnd="52dp"
-        android:backgroundTint="@android:color/black"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:text="Ether Balance"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -75,5 +72,46 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@android:color/background_light"
         android:textSize="30sp" />
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/sendEther"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_fab_label="Cancel"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_animationDelayPerItem="0"
+        fab:menu_colorNormal="#00C29F"
+        fab:menu_colorPressed="#00C29F"
+        fab:menu_colorRipple="#00C29F"
+        android:padding="8dp">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/quorum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            fab:fab_size="mini"
+            fab:fab_label="Quorum"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/ropsten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            fab:fab_size="mini"
+            fab:fab_label="Ropsten"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            fab:fab_size="mini"
+            fab:fab_label="Live"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>

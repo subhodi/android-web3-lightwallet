@@ -63,8 +63,8 @@ public class Wallet {
         return credentials;
     }
 
-    public Web3j constructWeb3() throws IOException {
-        Web3j web3 = Web3jFactory.build(new HttpService("http://10.244.5.43:22000"));  // defaults to http://localhost:8545/
+    public Web3j constructWeb3(String URL) throws IOException {
+        Web3j web3 = Web3jFactory.build(new HttpService(URL));  // defaults to http://localhost:8545/
         Web3ClientVersion web3ClientVersion;
         web3ClientVersion = web3.web3ClientVersion().send();
         String clientVersion = web3ClientVersion.getWeb3ClientVersion();
