@@ -2,7 +2,6 @@ package com.persistent.subhod_i.digitallocker;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -193,26 +192,6 @@ public class HomeActivity extends Activity {
                         return new String(result, StandardCharsets.UTF_8);
 
                     default:
-                        final EditText txtUrl = new EditText(this);
-
-// Set the default text to a link of the Queen
-                        txtUrl.setHint("http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg");
-
-                        new AlertDialog.Builder(this)
-                                .setTitle("Moustachify Link")
-                                .setMessage("Paste in the link of an image to moustachify!")
-                                .setView(txtUrl)
-                                .setPositiveButton("Moustachify", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        String url = txtUrl.getText().toString();
-                                        moustachify(null, url);
-                                    }
-                                })
-                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                    }
-                                })
-                                .show();
                         web3j = wallet.constructWeb3("http://10.51.233.3:22000");
                         loadBalance();
                         return "loadbalance";
@@ -227,7 +206,7 @@ public class HomeActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             try {
-                if (result == "ropstenTransaction" || result == "mainnetTransaction" || result == "quorumTransaction" || result=="loadbalance")
+                if (result == "ropstenTransaction" || result == "mainnetTransaction" || result == "quorumTransaction" || result == "loadbalance")
                     accountBalance.setText(balance.toString());
                 else {
                     response.setText(result);
