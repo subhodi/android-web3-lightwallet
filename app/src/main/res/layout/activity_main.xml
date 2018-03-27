@@ -75,8 +75,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/create"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="25dp"
         android:layout_marginTop="39dp"
         android:layout_toStartOf="@+id/login"
-        android:text="TextView" />
+        android:background="@android:color/background_light"
+        android:backgroundTint="@android:color/background_light"
+        android:text="Response"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

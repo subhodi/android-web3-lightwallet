@@ -29,16 +29,16 @@ public class Contract {
         return contract.getContractAddress();
     }
 
-    public String open(String key, byte[] value) throws Exception {
+    public String open(String key, byte[] value, String contractAddress) throws Exception {
         Simple_sol_simple contract = Simple_sol_simple.load(
-                "0x2f7b3ff7f918d68d172cc2ae2baa2f10aa79ea9d", web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
-        TransactionReceipt transactionReceipt = contract.open(key,value).send();
+                contractAddress, web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
+        TransactionReceipt transactionReceipt = contract.open(key, value).send();
         return transactionReceipt.getTransactionHash();
     }
 
-    public byte[] query(String key) throws Exception {
+    public byte[] query(String key, String contractAddress) throws Exception {
         Simple_sol_simple contract = Simple_sol_simple.load(
-                "0x2f7b3ff7f918d68d172cc2ae2baa2f10aa79ea9d", web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
+                contractAddress, web3j, credentials, BigInteger.valueOf(0), BigInteger.valueOf(100000));
         return contract.query(key).send();
     }
 }

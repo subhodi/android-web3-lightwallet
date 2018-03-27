@@ -89,6 +89,30 @@
         android:padding="8dp">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/quorumDeploy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            fab:fab_size="mini"
+            fab:fab_label="Deploy"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/quorumTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            fab:fab_size="mini"
+            fab:fab_label="Transaction"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/quorumQuery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            fab:fab_size="mini"
+            fab:fab_label="Query"/>
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/quorum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,5 +137,6 @@
             fab:fab_label="Mainnet"/>
 
     </com.github.clans.fab.FloatingActionMenu>
+
 
 </RelativeLayout>
