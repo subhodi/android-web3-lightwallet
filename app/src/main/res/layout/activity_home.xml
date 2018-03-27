@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/balance"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -72,71 +73,86 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@android:color/background_light"
         android:textSize="30sp" />
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/sendEther"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_singleLine="true"
-        fab:menu_fab_label="Cancel"
-        fab:menu_backgroundColor="#ccffffff"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="8dp"
         fab:menu_animationDelayPerItem="0"
+        fab:menu_backgroundColor="#ccffffff"
         fab:menu_colorNormal="#00C29F"
         fab:menu_colorPressed="#00C29F"
         fab:menu_colorRipple="#00C29F"
-        android:padding="8dp">
+        fab:menu_fab_label="Cancel"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/quorumDeploy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_size="mini"
-            fab:fab_label="Deploy"/>
+            fab:fab_label="Deploy"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/quorumTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_size="mini"
-            fab:fab_label="Transaction"/>
+            fab:fab_label="Transaction"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/quorumQuery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_size="mini"
-            fab:fab_label="Query"/>
+            fab:fab_label="Query"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/quorum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_size="mini"
-            fab:fab_label="Quorum"/>
+            fab:fab_label="Quorum"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/ropsten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_size="mini"
-            fab:fab_label="Ropsten"/>
+            fab:fab_label="Ropsten"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/mainnet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            fab:fab_size="mini"
-            fab:fab_label="Mainnet"/>
+            fab:fab_label="Mainnet"
+            fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
+
+    <TextView
+        android:id="@+id/response"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_size_normal"
+        android:layout_alignStart="@+id/textView5"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="68dp"
+        android:text="TextView"
+        android:textColorLink="@android:color/holo_green_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:layout_height="250dp"
+        tools:layout_width="200dp" />
 
 
 </RelativeLayout>

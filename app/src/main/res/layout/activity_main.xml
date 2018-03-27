@@ -29,7 +29,7 @@
 
     <EditText
         android:id="@+id/ethereumId"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/ethereumIdLabel"
         android:layout_below="@+id/ethereumIdLabel"
@@ -51,7 +51,7 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView4"
         android:layout_below="@+id/textView4"
@@ -81,7 +81,6 @@
         android:layout_toStartOf="@+id/login"
         android:background="@android:color/background_light"
         android:backgroundTint="@android:color/background_light"
-        android:text="Response"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />

@@ -33,6 +33,7 @@ public class HomeActivity extends Activity {
     Credentials credentials;
     TextView ethereumId;
     TextView accountBalance;
+    TextView response;
     FloatingActionButton quorum, ropsten, mainnet, quorumDeploy, quorumTransaction, quorumQuery;
     BigInteger balance;
     String contractAddress = "";
@@ -44,6 +45,7 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         ethereumId = (TextView) findViewById(R.id.ethereumId);
         accountBalance = (TextView) findViewById(R.id.accountBalance);
+        response = (TextView) findViewById(R.id.response);
         quorum = (FloatingActionButton) findViewById(R.id.quorum);
         ropsten = (FloatingActionButton) findViewById(R.id.ropsten);
         mainnet = (FloatingActionButton) findViewById(R.id.mainnet);
@@ -132,7 +134,7 @@ public class HomeActivity extends Activity {
         ethereum = getIntent().getExtras().getString("ethereumId");
         password = getIntent().getExtras().getString("password");
         ethereumId.setText(ethereum);
-//        new LongOperation().execute("loadBalance");
+        new LongOperation().execute("loadBalance");
     }
 
     public void loadBalance() throws Exception {
@@ -189,6 +191,32 @@ public class HomeActivity extends Activity {
                         contract = new Contract(web3j, credentials);
                         byte[] result = contract.query("alice", contractAddress);
                         return new String(result, StandardCharsets.UTF_8);
+
+                    default:
+                        final EditText txtUrl = new EditText(this);
+
+// Set the default text to a link of the Queen
+                        txtUrl.setHint("http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg");
+
+                        new AlertDialog.Builder(this)
+                                .setTitle("Moustachify Link")
+                                .setMessage("Paste in the link of an image to moustachify!")
+                                .setView(txtUrl)
+                                .setPositiveButton("Moustachify", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String url = txtUrl.getText().toString();
+                                        moustachify(null, url);
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                    }
+                                })
+                                .show();
+                        web3j = wallet.constructWeb3("http://10.51.233.3:22000");
+                        loadBalance();
+                        return "loadbalance";
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -199,10 +227,10 @@ public class HomeActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             try {
-                if (result == "ropstenTransaction" || result == "mainnetTransaction" || result == "quorumTransaction")
+                if (result == "ropstenTransaction" || result == "mainnetTransaction" || result == "quorumTransaction" || result=="loadbalance")
                     accountBalance.setText(balance.toString());
                 else {
-                    accountBalance.setText(result);
+                    response.setText(result);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
