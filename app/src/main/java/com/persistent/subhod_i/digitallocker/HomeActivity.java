@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.github.clans.fab.FloatingActionButton;
-
 import android.view.View;
 import android.widget.TextView;
 

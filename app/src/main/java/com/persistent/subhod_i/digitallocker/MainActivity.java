@@ -17,8 +17,6 @@ import android.view.View;
 
 import org.web3j.crypto.Credentials;
 
-import java.util.Collections;
-
 public class MainActivity extends AppCompatActivity {
     Wallet wallet = new Wallet();
     Button login, create;
