@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.github.clans.fab.FloatingActionButton;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,8 +39,8 @@ public class HomeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get the view from new_activity.xml
         setContentView(R.layout.activity_home);
+
         ethereumId = (TextView) findViewById(R.id.ethereumId);
         accountBalance = (TextView) findViewById(R.id.accountBalance);
         response = (TextView) findViewById(R.id.response);
@@ -57,7 +56,6 @@ public class HomeActivity extends Activity {
             loadData();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("Home-screen", e.toString());
         }
     }
 
@@ -139,7 +137,6 @@ public class HomeActivity extends Activity {
     public void loadBalance() throws Exception {
         EthGetBalance ethGetBalance = web3j.ethGetBalance(ethereum, DefaultBlockParameterName.LATEST).sendAsync().get();
         balance = ethGetBalance.getBalance();
-        Log.e("Home-screen", balance.toString());
     }
 
     private class LongOperation extends AsyncTask<String, Void, String> {
@@ -195,20 +192,21 @@ public class HomeActivity extends Activity {
                         web3j = wallet.constructWeb3("http://10.51.233.3:22000");
                         loadBalance();
                         return "loadbalance";
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                return e.toString();
             }
-            return "Executed";
         }
 
         @Override
         protected void onPostExecute(String result) {
             try {
+                // Ether send trasnaction, update balance
                 if (result == "ropstenTransaction" || result == "mainnetTransaction" || result == "quorumTransaction" || result == "loadbalance")
                     accountBalance.setText(balance.toString());
                 else {
+                    // Contract trasnaction, update response view
                     response.setText(result);
                 }
             } catch (Exception e) {
@@ -232,8 +230,6 @@ public class HomeActivity extends Activity {
         for (int i = 0; i < chars.length; i++) {
             hex.append(Integer.toHexString((int) chars[i]));
         }
-
         return hex.toString() + "".join("", Collections.nCopies(32 - (hex.length() / 2), "00"));
     }
 }
-

@@ -81,7 +81,7 @@
         android:layout_toStartOf="@+id/login"
         android:background="@android:color/background_light"
         android:backgroundTint="@android:color/background_light"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
 

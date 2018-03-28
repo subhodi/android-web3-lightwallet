@@ -1,7 +1,6 @@
 package com.persistent.subhod_i.digitallocker;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,23 +8,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import android.app.NotificationManager;
-import android.support.v4.app.NotificationCompat;
 import android.view.View;
-import android.content.Context;
 
 import org.web3j.crypto.Credentials;
-import org.web3j.protocol.Web3j;
 
 import java.util.Collections;
-
-import static java.lang.String.join;
-
 
 public class MainActivity extends AppCompatActivity {
     Wallet wallet = new Wallet();
@@ -37,12 +29,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(MainActivity.this, "Welcome to Eth-wallet", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "Welcome to Ethereum-mobile-wallet", Toast.LENGTH_LONG).show();
         RegisterView();
         loadDefaultWallet();
         checkPermissions();
         addEventListners();
-        makeTransaction();
     }
 
     private void RegisterView() {
@@ -64,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                     ethereumId.setText(credentials.getAddress());
                     Intent homeIntent = new Intent(MainActivity.this,
                             HomeActivity.class);
-                    homeIntent.putExtra("ethereumId",credentials.getAddress());
-                    homeIntent.putExtra("password",passwordText);
+                    homeIntent.putExtra("ethereumId", credentials.getAddress());
+                    homeIntent.putExtra("password", passwordText);
                     startActivity(homeIntent);
                 } catch (Exception e) {
                     result.setText(e.toString());
@@ -88,15 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadDefaultWallet() {
         ethereumId.setText("0x833e56c5df2a654372a252658006af4d3158e9f3");
-    }
-
-    private void addNotification(String transactionHash) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.notification_icon);
-        mBuilder.setContentTitle("New transaction sent");
-        mBuilder.setContentText("Tx hash: " + transactionHash);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(102, mBuilder.build());
     }
 
     private void checkPermissions() {
@@ -122,54 +104,4 @@ public class MainActivity extends AppCompatActivity {
             Log.v(TAG, "Permission is granted2");
         }
     }
-
-    private void makeTransaction() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-//                    Web3j web3j = wallet.constructWeb3();
-//                    Credentials credentials = wallet.loadCredentials("password");
-//                    String transactionHash = wallet.sendTransaction(web3j, credentials);
-//                    addNotification(transactionHash);
-//                    wallet.bip();
-//                    String contractAddress = wallet.deployContract(web3j, credentials);
-//                    Log.e("Contract deployment", contractAddress);
-//                    addNotification(contractAddress);
-//                    String transactionHash = wallet.contractTransaction(web3j, credentials);
-//                    Log.e("Contract deployment", transactionHash);
-//                        wallet.queryContract(web3j);
-
-//                    Contract contract = new Contract(web3j,credentials);
-//                    String contractAddress = contract.deploy();
-//                    Log.e("Contract" , contractAddress);
-//
-//                    String transactionHash= contract.open("alice", Numeric.hexStringToByteArray(asciiToHex("myString")));
-//                    Log.e("Contract", transactionHash);
-//
-//                    byte[] result = contract.query("alice");
-//                    Log.e("Contract",  new String(result, StandardCharsets.UTF_8));
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("Web3 Error ", e.toString());
-                }
-            }
-        });
-
-        thread.start();
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    public String asciiToHex(String asciiValue) {
-        char[] chars = asciiValue.toCharArray();
-        StringBuffer hex = new StringBuffer();
-        for (int i = 0; i < chars.length; i++) {
-            hex.append(Integer.toHexString((int) chars[i]));
-        }
-
-        return hex.toString() + "".join("", Collections.nCopies(32 - (hex.length() / 2), "00"));
-    }
-
 }
